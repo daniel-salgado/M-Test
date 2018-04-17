@@ -162,7 +162,6 @@ namespace EmployeePaySlipCore.Business
                 throw ex;
             }
 
-
         }
 
         private double CalculateSuper(double grossIncome, double superRate)
