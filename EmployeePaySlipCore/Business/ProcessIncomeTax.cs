@@ -7,27 +7,49 @@ using System.Linq;
 
 namespace EmployeePaySlipCore.Business
 {
-    
-    public class Processing
+
+    public class ProcessIncomeTax
     {
 
         public string FileName { get; set; }
+        public int Count { get; private set; }
+        public bool Status { get; private set; }
 
         private List<EmployeePaySlip> employeePaySlips = new List<EmployeePaySlip>();
+
+        public void ReadFile()
+        {
+
+            try
+            {
+
+                InputFile file = new InputFile(this.FileName);
+
+                if (file.FileExists)
+                {
+                    employeePaySlips = file.ProcessFile();
+                    this.Count = employeePaySlips.Count;
+                }
+                else
+                {
+                    throw new Exception("File doesn't exist ");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
 
         public void Process()
         {
 
             try
             {
-                InputFile file = new InputFile(this.FileName);
 
-                if (file.FileExists)
-                    employeePaySlips = file.ProcessFile();
-                else
-                    throw new Exception("File doesn't exist ");
-
-                if (employeePaySlips.Count > 0)
+                if (this.Count > 0)
                     Calculate();
                 else
                     throw new Exception("No employee to process");
@@ -40,6 +62,34 @@ namespace EmployeePaySlipCore.Business
 
         }
 
+        private void Calculate()
+        {
+
+            Parallel.ForEach(employeePaySlips, (item) =>
+            {
+
+                try
+                {
+
+                    item.GrossIncome = CalculateGrossIncome(item.AnnualSalary);
+                    item.IncomeTax = CalculateIncomeTax(item.AnnualSalary);
+                    item.NetIncome = CalculateNetIncome(item.GrossIncome, item.IncomeTax);
+                    item.Super = CalculateSuper(item.GrossIncome, item.SuperRate);
+
+                    item.StatusDescription = "OK";
+
+                }
+                catch (Exception ex)
+                {
+                    item.StatusDescription = ex.Message;
+                }
+
+                this.Status = true;
+
+            });
+
+        }
+
         public string GetemployeePaySlipsInfo()
         {
 
@@ -47,8 +97,24 @@ namespace EmployeePaySlipCore.Business
 
             foreach (var item in employeePaySlips)
             {
-                info.AppendFormat("{0} {1},{2},{3},{4},{5},{6}", item.FirstName, item.LastName, item.PaymentSartDate, item.GrossIncome, item.IncomeTax, item.NetIncome, item.Super);
+
+                string formatedText = "{0} {1},{2},{3},{4},{5},{6}";
+
+                if (item.StatusDescription != "OK")
+                    formatedText += ",{7}";
+
+                info.AppendFormat(formatedText
+                                  , item.FirstName
+                                  , item.LastName
+                                  , item.PaymentSartDate
+                                  , item.GrossIncome
+                                  , item.IncomeTax
+                                  , item.NetIncome
+                                  , item.Super
+                                  , item.StatusDescription);
+
                 info.AppendLine();
+
             }
 
             return info.ToString();
@@ -69,7 +135,7 @@ namespace EmployeePaySlipCore.Business
 
         }
 
-        private double CalculateIncomeTaxLinQ(double annualSalary)
+        private double CalculateIncomeTax(double annualSalary)
         {
 
             double incomeTax = 0;
@@ -109,44 +175,6 @@ namespace EmployeePaySlipCore.Business
 
         }
 
-
-        // private double CalculateIncomeTax(double annualSalary)
-        // {
-
-
-        //     double incomeTax = 0;
-
-        //     try
-        //     {
-        //         if (annualSalary >= 0 && annualSalary <= 18200)
-        //             incomeTax = 0;
-
-        //         if (annualSalary >= 18201 && annualSalary <= 37000)
-        //             incomeTax = ((annualSalary - 18200) * 0.19) / 12;
-
-        //         if (annualSalary >= 37001 && annualSalary <= 87000)
-        //             incomeTax = (3572 + (annualSalary - 37000) * 0.325) / 12;
-
-        //         if (annualSalary >= 87001 && annualSalary <= 180000)
-        //             incomeTax = (19822 + (annualSalary - 87000) * 0.37) / 12;
-
-        //         if (annualSalary >= 180001)
-        //             incomeTax = (54232 + (annualSalary - 180000) * 0.45) / 12;
-
-
-        //         incomeTax = Math.Round(incomeTax, 0);
-
-        //         return incomeTax;
-
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw ex;
-        //     }
-
-
-        // }
-
         private double CalculateNetIncome(double grossIncome, double incomeTax)
         {
 
@@ -172,27 +200,12 @@ namespace EmployeePaySlipCore.Business
             try
             {
                 super = Math.Round(grossIncome * (superRate / 100));
-				return super;
+                return super;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
-        }
-
-        private void Calculate()
-        {
-
-            Parallel.ForEach(employeePaySlips, (item) =>
-            {
-
-                item.GrossIncome = CalculateGrossIncome(item.AnnualSalary);
-                item.IncomeTax = CalculateIncomeTaxLinQ(item.AnnualSalary);
-                item.NetIncome = CalculateNetIncome(item.GrossIncome, item.IncomeTax);
-                item.Super = CalculateSuper(item.GrossIncome, item.SuperRate);
-
-            });
 
         }
 

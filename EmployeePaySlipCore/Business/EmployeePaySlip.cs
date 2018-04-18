@@ -1,10 +1,8 @@
-﻿using System;
-namespace EmployeePaySlipCore.Business
+﻿namespace EmployeePaySlipCore.Business
 {
     public class EmployeePaySlip
     {
-
-
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public double AnnualSalary { get; set; }
@@ -17,8 +15,7 @@ namespace EmployeePaySlipCore.Business
         public double NetIncome { get; set; }
         public double Super { get; set; }
 
-        public EmployeePaySlip()
-        {
-        }
+        public string StatusDescription { get; set; }
+
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EmployeePaySlipCore.TaxRateDatabase
 {
     public class TaxRatesDAO
     {
-        
+
         public List<TaxRateDTO> TaxRates = new List<TaxRateDTO>();
-       
+
         public TaxRatesDAO()
         {
             LoadDummyData();
