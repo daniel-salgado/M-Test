@@ -12,7 +12,7 @@ namespace MYOBTest
             string fileName;
             string appName = System.AppDomain.CurrentDomain.FriendlyName;
 
-			Console.WriteLine(String.Format("Hello!Welcome to {0}", appName));
+			Console.WriteLine(String.Format("Hello! Welcome to {0}", appName));
 
             if (args.Length != 1)
             {
