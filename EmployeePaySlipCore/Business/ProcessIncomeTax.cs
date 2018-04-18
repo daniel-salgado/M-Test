@@ -14,6 +14,7 @@ namespace EmployeePaySlipCore.Business
         public string FileName { get; set; }
         public int Count { get; private set; }
         public bool Status { get; private set; }
+        public bool FileLoaded { get; private set; }
 
         private List<EmployeePaySlip> employeePaySlips = new List<EmployeePaySlip>();
 
@@ -29,6 +30,7 @@ namespace EmployeePaySlipCore.Business
                 {
                     employeePaySlips = file.ProcessFile();
                     this.Count = employeePaySlips.Count;
+                    this.FileLoaded = true;
                 }
                 else
                 {
@@ -49,6 +51,9 @@ namespace EmployeePaySlipCore.Business
             try
             {
 
+                if (!this.FileLoaded)
+                    throw new Exception("File not loaded");
+                
                 if (this.Count > 0)
                     Calculate();
                 else

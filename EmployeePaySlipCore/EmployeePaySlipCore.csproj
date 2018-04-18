@@ -44,12 +44,15 @@
     <Compile Include="Business\EmployeePaySlip.cs" />
     <Compile Include="Business\InputFile.cs" />
     <Compile Include="Business\ProcessIncomeTax.cs" />
-    <Compile Include="TaxRateDatabase\TaxRateDTO.cs" />
-    <Compile Include="TaxRateDatabase\TaxRatesDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\" />
-    <Folder Include="TaxRateDatabase\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaxRateDatabase\TaxRateDatabase.csproj">
+      <Project>{B332A4A7-FE65-41A0-96B2-7FB475480B54}</Project>
+      <Name>TaxRateDatabase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

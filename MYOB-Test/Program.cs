@@ -21,7 +21,7 @@ namespace MYOBTest
                 Console.WriteLine("1) Prepare and use a CSV file as input, with the same format as in the requirements");
                 Console.WriteLine("   * first name, last name, annual salary, super rate (%), payment start date");
                 Console.WriteLine("   * David,Rudd,60050,9%,01 March – 31 March");
-                Console.WriteLine("2) Exeute this program informing the file name and path");
+                Console.WriteLine("2) Execute this program informing the file name and path");
                 Console.WriteLine(String.Format("   * Example: {0} {1}", appName, @"C:\Temp\inputFile.csv"));
                 Console.WriteLine("Inform the CSV file to process");
                 Console.WriteLine(@"Example: MYOB-Test.exe c:\tem\usersSalary.csv");

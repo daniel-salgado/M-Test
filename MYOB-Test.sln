@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYOB-Test", "MYOB-Test\MYOB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeePaySlipCore", "EmployeePaySlipCore\EmployeePaySlipCore.csproj", "{79EB46E6-44BB-4E1B-94F2-3852DA4EB425}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxRateDatabase", "TaxRateDatabase\TaxRateDatabase.csproj", "{B332A4A7-FE65-41A0-96B2-7FB475480B54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,5 +21,9 @@ Global
 		{79EB46E6-44BB-4E1B-94F2-3852DA4EB425}.Debug|x86.Build.0 = Debug|Any CPU
 		{79EB46E6-44BB-4E1B-94F2-3852DA4EB425}.Release|x86.ActiveCfg = Release|Any CPU
 		{79EB46E6-44BB-4E1B-94F2-3852DA4EB425}.Release|x86.Build.0 = Release|Any CPU
+		{B332A4A7-FE65-41A0-96B2-7FB475480B54}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B332A4A7-FE65-41A0-96B2-7FB475480B54}.Debug|x86.Build.0 = Debug|Any CPU
+		{B332A4A7-FE65-41A0-96B2-7FB475480B54}.Release|x86.ActiveCfg = Release|Any CPU
+		{B332A4A7-FE65-41A0-96B2-7FB475480B54}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
